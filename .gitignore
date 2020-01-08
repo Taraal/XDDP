@@ -1,2 +1,8 @@
 /venv/
 /.idea/
+/xddp/db.sqlite3
+/xddp/adventure/__pycache__/
+/xddp/arena/__pycache__/
+/xddp/authenticate/__pycache__/
+/xddp/inventory/__pycache__/
+/xddp/pokemon/__pycache__/
