@@ -6,3 +6,5 @@
 /xddp/authenticate/__pycache__/
 /xddp/inventory/__pycache__/
 /xddp/pokemon/__pycache__/
+/xddp/pokemon/resources/sprites/front/*.png
+/xddp/pokemon/resources/sprites/back/*.png

@@ -1,0 +1,1 @@
+please use sprites/importSprites.py to fill this folder
