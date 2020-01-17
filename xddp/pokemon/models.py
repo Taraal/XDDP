@@ -62,7 +62,7 @@ class Pokemon(models.Model):
     name = models.CharField(max_length=50,null=True)
     id_poke = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     id_player = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
-    id_team = models.ForeignKey(PokemonTeam, null=True)
+    id_team = models.ForeignKey(PokemonTeam, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
