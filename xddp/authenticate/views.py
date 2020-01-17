@@ -2,8 +2,8 @@ import hashlib, binascii, os
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from xddp.pokemon.models import Player
 
-from pokemon.models import Player
 
 # Create your views here.
 
