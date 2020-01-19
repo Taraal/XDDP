@@ -1,4 +1,4 @@
-from xddp.pokemon.models import Pokemon
+from models import Pokemon
 
 def importAll():
     """
