@@ -26,6 +26,15 @@ class Player(models.Model):
     def __str__(self):
         return self.username
 
+    # TODO :
+    # Add a proper create method for Player
+    @classmethod
+    def create(cls):
+        player = cls(name="Sylouan")
+        player.save()
+        return player
+
+
 #############################
 # POKEMON AND POKEMON TEAMS #
 #############################
@@ -60,9 +69,14 @@ class Pokemon(models.Model):
     defense = models.IntegerField(null=True)
     hp = models.IntegerField(null=True)
     name = models.CharField(max_length=50,null=True)
+    level = models.IntegerField(null=True)
+    exp = models.IntegerField(null=True)
     id_poke = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     id_player = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
     id_team = models.ForeignKey(PokemonTeam, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name + str(self.id)
 
     @classmethod
     def ImportOne(cls, id):
@@ -88,6 +102,16 @@ class Pokemon(models.Model):
             poke = Pokemon.objects.get(id_poke=id)
         return poke
 
+
+    #TODO:
+    #Add a proper create method for Pokemon
+    @classmethod
+    def create(cls):
+        player = Player.objects.get(id=1)
+        pokeOne = Pokemon.objects.get(id=1)
+        newpoke = cls(name="Pokemon", id_player=player, id_poke=pokeOne)
+        newpoke.save()
+        return newpoke
 
 
     @classmethod
