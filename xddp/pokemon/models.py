@@ -64,17 +64,14 @@ class Pokemon(models.Model):
     id_player = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
     id_team = models.ForeignKey(PokemonTeam, on_delete=models.CASCADE, null=True)
 
-    def __str__(self):
-        return self.name
-
     @classmethod
     def ImportOne(cls, id):
         """
         Allows one to import a specific base Pokemon from pokeapi
         :param id:
         """
-        poke = Pokemon.objects.get(id_poke=id)
-        if not poke:
+
+        if not Pokemon.objects.filter(id_poke=id).exists():
             url = "https://pokeapi.co/api/v2/pokemon/"
 
             data = requests.get(url + str(id)).json()
@@ -90,3 +87,13 @@ class Pokemon(models.Model):
         else:
             poke = Pokemon.objects.get(id_poke=id)
         return poke
+
+
+
+    @classmethod
+    def getList(cls, id_max=152):
+        """
+        :param id_max : Max id returned from database (default: 152)
+        """
+        pokeList = Pokemon.objects.all().filter(id__lte=id_max)
+        return pokeList
