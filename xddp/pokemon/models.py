@@ -34,6 +34,16 @@ class Player(models.Model):
         player.save()
         return player
 
+    @classmethod
+    def getAll(cls):
+        """
+        Gets all the players in the database
+        :rtype: Player Queryset
+        """
+
+        fullList = Player.objects.all()
+
+        return fullList
 
 #############################
 # POKEMON AND POKEMON TEAMS #
@@ -51,6 +61,37 @@ class PokemonTeam(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def getAllFromPlayer(cls, id_player=None):
+        """
+
+        :param id_player: id of the player searched for
+        :type id_player: int
+        :return: A list of all the teams the player has
+        :rtype: PokemonTeam Queryset
+        """
+        try:
+            player = Player.objects.get(id=id_player)
+        except Exception as e:
+            return "Player not found"
+
+        list = PokemonTeam.objects.filter(id_player=player)
+
+        return list
+
+    @classmethod
+    def create(cls, player_id=None, name=None):
+        try:
+            player = Player.objects.get(id=player_id)
+        except Exception as e:
+            return "Player not found"
+
+        new_team = cls(id_player=player, name=name)
+        new_team.save()
+
+        return new_team
+
 
 
 class Pokemon(models.Model):
@@ -102,6 +143,25 @@ class Pokemon(models.Model):
             poke = Pokemon.objects.get(id_poke=id)
         return poke
 
+    @classmethod
+    def getFromTeam(cls, id_team=None):
+        """
+
+        :param id_team: id of the searched team
+        :type id_team: int
+        :return: All pokemons from a specific team
+        :rtype: Pokemon Queryset
+        """
+
+        try:
+            team = PokemonTeam.objects.get(id=id_team)
+        except Exception as e:
+            return "Team not found"
+
+
+        list = Pokemon.objects.filter(id_team=team)
+
+        return list
 
     #TODO:
     #Add a proper create method for Pokemon
@@ -112,6 +172,26 @@ class Pokemon(models.Model):
         newpoke = cls(name="Pokemon", id_player=player, id_poke=pokeOne)
         newpoke.save()
         return newpoke
+
+    @classmethod
+    def create(cls, player_id=None, pokemon_id=None, team_id=None, atk=None, hp=None, defense=None,
+               name=None, level=None, exp=None, speed=None,):
+        try:
+            player = Player.objects.get(id=player_id)
+        except Exception as e:
+            return "Player not found"
+
+        try:
+            team = PokemonTeam.objects.get(id=team_id)
+        except Exception as e:
+            return "Team not found"
+
+        new_poke = cls(name=name, level=level, exp=exp, speed=speed, atk=atk, defense=defense,
+                       team_id=team, pokemon_id=pokemon_id, player_id=player)
+        new_poke.save()
+
+        return new_poke
+
 
 
     @classmethod
