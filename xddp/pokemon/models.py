@@ -34,6 +34,10 @@ class Player(models.Model):
         player.save()
         return player
 
+    def create(cls, username=None, password=None, email=None, surname=None, dob=None):
+        player = Player(cls, username=username, password=password, email=email, surname=surname, dob=dob)
+        player.save()
+
     @classmethod
     def getAll(cls):
         """
@@ -44,6 +48,16 @@ class Player(models.Model):
         fullList = Player.objects.all()
 
         return fullList
+
+    def getPlayer(cls, username):
+        try:
+            player = Player.objects.get(username=username)
+
+
+            return player
+        except Exception as e:
+            return "Player not found"
+
 
 #############################
 # POKEMON AND POKEMON TEAMS #
