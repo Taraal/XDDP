@@ -12,5 +12,4 @@ def register(request):
     player = Player()
     player.save()
 
-
     return HttpResponse("Player registered")
