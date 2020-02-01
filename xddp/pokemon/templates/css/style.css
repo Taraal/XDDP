@@ -35,9 +35,9 @@ body {
 }
 
 .rounded-red.top {
-    width: 500px;
-    height: 500px;
-    border-radius: 250px;
+    width: 530px;
+    height: 530px;
+    border-radius: 265px;
     position: absolute;
     top: -230px;
     left: -250px;
