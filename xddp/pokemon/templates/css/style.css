@@ -14,12 +14,21 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("../assets/img/bg-pokemon.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
     font-family: Elegance, sans-serif;
 }
+
+.connection {
+    background-image: url("../assets/img/bg-pokemon.jpg");
+}
+
+.registration {
+    background-image: url("../assets/img/bg-pokemon-reg.jpg");
+}
+
+
 .op {
     width: 100vw;
     height: 100vh;
@@ -121,6 +130,15 @@ body {
         background-color: #333333;
         border: 0;
         color: white;
+        cursor: pointer;
+    }
+
+      form input[type=submit]:hover{
+        margin: auto;
+        background-color: #333333;
+        border: 0;
+        color: #e30713;
+        cursor: pointer;
     }
 
 
