@@ -25,20 +25,28 @@ body {
     height: 100vh;
    background:rgba(255,255,255, 0.5);
 }
+#title-page {
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    font-family: Pokemon, sans-serif;
+    color: #333333;
+    text-shadow: 1px 1px white, -1px -1px #444;
+}
 
 .rounded-red.top {
-    width: 300px;
-    height: 300px;
-    border-radius: 150px;
+    width: 500px;
+    height: 500px;
+    border-radius: 250px;
     position: absolute;
-    top: -150px;
-    left: -150px;
+    top: -230px;
+    left: -250px;
     background-color: #e30713;
 }
     .rounded-red.top h1 {
         color: white;
-        margin-top: 150px;
-        margin-left: 170px;
+        margin-top: 260px;
+        margin-left: 260px;
         font-family: Pokemon, sans-serif;
     }
 
@@ -53,7 +61,7 @@ body {
 }
     .rounded-red.bottom p {
         margin-top: 165px;
-        margin-left: 65px;
+        margin-left: 80px;
     }
     .rounded-red.bottom p a {
         text-decoration: none;
@@ -62,8 +70,8 @@ body {
         font-weight: bold;
     }
      .rounded-red.bottom p a:hover {
-        text-decoration: none;
-        color: #e30713;
+         text-decoration: none;
+         color: #e30713;
          font-size: 14px;
          font-weight: bold;
     }
@@ -86,7 +94,7 @@ body {
     display: block;
     position: absolute;
     top: 20vh;
-    left:  42.5vw;
+    left: 42.5vw;
 }
 
     .form-container form input {
