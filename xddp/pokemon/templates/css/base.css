@@ -1,0 +1,150 @@
+*{
+    margin: 0;
+    padding: 0;
+    display: flexbox;
+    font-family: Roboto, sans-serif;
+}
+html, body{
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+/* Header */
+
+#header{
+    width: 100%;
+    background-color: #e61e1e;
+    border: 1px solid black;
+    box-shadow: 0px 2px 7px 1px black;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+#header_title{
+    grid-column: 1;
+    grid-row: 1;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+#header_actions{
+    grid-column: 2;
+    grid-row: 1;
+    color:white;
+    font-size:24px;
+    text-align: right;
+    padding: 10px;
+}
+
+/* Main */
+#main{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100% 15%;
+    grid-template-areas:
+     "sidebar content"
+     "footer footer"
+     
+}
+
+#sidebar{
+    grid-area: sidebar;
+    text-align: center;
+    border-radius: 4px;
+    margin: 15px 15px 15px 0px;
+}
+
+.sidebar_btn{
+    background:linear-gradient(#d4d4d4, #aaaaaa) ;
+    padding: 10px;
+    font-size: 250%;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px -1px 5px black;
+}.sidebar_btn:hover{
+    background:linear-gradient(#e9e9e9, #e4e4e4);
+    cursor: pointer;
+    transform: translateY(-5px);
+    transition-duration: 0.3s;
+}
+
+#content{
+    background-image: url("./assets/map2phone.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+    background-repeat: no-repeat; 
+    grid-area: content;
+    background-color: white;
+    margin: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 13px 0px black;
+}
+
+#content_map1{
+    background:linear-gradient(#0b753b, #19683d);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 50px; left: 100px;
+}#content_map1:hover{
+    background:linear-gradient(#29b86b, #44b97f);
+}
+
+#content_map2{
+    background:linear-gradient(#6d4c0f, #6d4e19);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 150px; left: 250px;
+}#content_map2:hover{
+    background:linear-gradient(#af8027, #cf8b16);
+}
+
+#content_map3{
+    background:linear-gradient(#3651c7, #102dad);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 350px; left: 5px;
+}#content_map3:hover{
+    background:linear-gradient(#6b7fda, #2e51f0);
+}
+
+#content_map4{
+    background:linear-gradient(#630404, #8f1111);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 75px; left: 500px;
+}#content_map4:hover{
+    background:linear-gradient(#c51010, #b41515);
+}
+
+#footer{
+    grid-area: footer;
+    background:linear-gradient(#0e0e0e, #242424);
+    text-align: center;
+    color: white;
+}
