@@ -3,17 +3,20 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('all/', views.getAll, name='getAll'),
+    path('internal/', views.getAll, name='getAll'),
+
+    path('internal/<int:idPoke>/', views.getOnePokemon, name='getOnePokemon'),
+    path('internal/own/', views.getOwnPokemon, name='getOwnPokes'),
+    path('internal/add/', views.addOneRandom, name='addOneRandom'),
 
     #ATTENTION A NE PAS FLOOD VOTRE BDD#
     #path('import/', views.importAll, name='importAll'),
     ####################################
 
-    path('add/', views.addOneRandom, name='addOneRandom'),
+    path('internal/player/add/', views.addPlayer, name='addPlayer'),
+    path('internal/player/', views.getPlayers, name='getPlayers'),
+    path('internal/player/<int:idPlayer>/', views.getOnePlayer, name='getOnePlayer'),
 
-    #URLs for testing purposes
-    path('addplayer/', views.addPlayer, name='addPlayer'),
-    path('getplayers/', views.getPlayers, name='getPlayers'),
-    path('getownpokes/', views.getOwnPokemon, name='getOwnPokes'),
+
 
 ]
