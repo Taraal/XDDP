@@ -1,17 +1,13 @@
 import json
+import os
+import requests
+import random
 
 from django.http import HttpResponse
-from .models import Pokemon, Player
-
 from django.core import serializers
 
 from authenticate.views import hashPass
-
-###################################################
-#TODO:                                            #
-#Stop being a lazy fuck and do some proper methods#
-###################################################
-
+from .models import Pokemon, Player, Zone
 
 ##########
 # PLAYER #
@@ -90,3 +86,71 @@ def getOnePokemon(request, idPoke):
         return HttpResponse(e)
 
     return HttpResponse(json, content_type='application/json')
+
+def encounter(request, idZone):
+    try:
+
+        zone = Zone.objects.get(pk=idZone)
+        random_poke = random.choice(list(zone.allowed_pokemon))
+        json = serializers.serialize('json', random_poke)
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+#########
+# SETUP #
+#########
+
+def importAll(request):
+    ###########
+    # SPRITES #
+    ###########
+
+    urlback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/"
+    urlfront = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+
+    #for i in range(1, 152):
+
+    #    if not os.path.exists('xddp/pokemon/resources/sprites/back/' + str(i) + '.png'):
+    #        rback = requests.get(urlback + str(i) + ".png")
+    #        with open('xddp/pokemon/resources/sprites/back/' + str(i) + '.png', 'wb') as back:
+    #            back.write(rback.content)
+
+     #   if not os.path.exists('xddp/pokemon/resources/sprites/front/' + str(i) + '.png'):
+     #       with open('xddp/pokemon/resources/sprites/front/' + str(i) + '.png', 'wb') as front:
+    #            rfront = requests.get(urlfront + str(i) + ".png")
+    #            front.write(rfront.content)
+
+    #########
+    # ZONES #
+    #########
+
+    names = ['Forêt, Montagne, Mer, Volcan']
+
+    allowed_pokes = [
+        [1, 2, 3, 10, 11, 16, 20, 23],
+        [25, 27, 39, 46, 50, 56, 74, 95],
+        [7, 8, 9, 116, 98, 129, 86],
+        [4, 5, 6, 37, 58, 77, 126, 136]
+    ]
+
+    for i in range(0, 3):
+        if not Zone.objects.filter(pk=i+1).exists():
+
+            new_zone = Zone(name=names[i])
+            for poke in allowed_pokes[i]:
+                new_zone.allowed_pokemon.add(Pokemon.objects.filter(pk=poke))
+
+            new_zone.save()
+
+    #########
+    # TYPES #
+    #########
+
+    ############
+    # POKEMONS #
+    ############
+
+    for i in range(1, 152):
+        Pokemon.ImportOne(i)
