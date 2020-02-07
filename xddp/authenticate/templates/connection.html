@@ -1,28 +1,29 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Inscription</title>
-        <link rel="stylesheet" href="css/style.css">
+        <title>Connexion</title>
+        <link rel="stylesheet" href="{% static 'css/style' %}.css"/>
     </head>
-    <body class="registration">
+    <body class="connection">
         <div class="op">
             <div class="rounded-red top">
                 <h1>XDDP</h1>
-                <h1 id="title-page">Inscription</h1>
+                <h1 id="title-page">Connexion</h1>
             </div>
             <div class="pokeball-form">
-                <img src="assets/img/pokeball.png" alt="">
-                <div class="form-container reg">
+                <img src="{% static 'assets/img/pokeball' %}.png" alt="">
+                <div class="form-container conn">
                     <form action="" method="post">
                         <input type="text" placeholder="Identifiant" name="username">
                         <input type="password" placeholder="Mot de passe" name="pwd">
-                        <input type="submit" value="Devenir un dresseur de pokémeons">
+                        <input type="submit" value="Allons capturer des pokémons">
                     </form>
                 </div>
             </div>
             <div class="rounded-red bottom">
-                <p><a href="connection.html">Déjà un dresseur</a></p>
+                <p><a href="registration.html">Devenir un dresseur</a></p>
             </div>
         </div>
     </body>

@@ -1,0 +1,152 @@
+/*_______________________ FONTS _______________________________ */
+
+@font-face {
+ font-family: "Pokemon";
+ src: url("../assets/fonts/PokemonSolid.ttf") format("truetype")
+}
+
+@font-face {
+ font-family: "Elegance";
+ src: url("../assets/fonts/Rounded_Elegance.ttf") format("truetype")
+}
+
+/*_____________________ BACKGROUND _____________________________ */
+body {
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    font-family: Elegance, sans-serif;
+}
+
+.connection {
+    background-image: url("../assets/img/bg-pokemon.jpg");
+}
+
+.registration {
+    background-image: url("../assets/img/bg-pokemon-reg.jpg");
+}
+
+
+.op {
+    width: 100vw;
+    height: 100vh;
+   background:rgba(255,255,255, 0.5);
+}
+#title-page {
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    font-family: Pokemon, sans-serif;
+    color: #333333;
+    text-shadow: 1px 1px white, -1px -1px #444;
+}
+
+.rounded-red.top {
+    width: 530px;
+    height: 530px;
+    border-radius: 265px;
+    position: absolute;
+    top: -230px;
+    left: -250px;
+    background-color: #e30713;
+}
+    .rounded-red.top h1 {
+        color: white;
+        margin-top: 260px;
+        margin-left: 260px;
+        font-family: Pokemon, sans-serif;
+    }
+
+.rounded-red.bottom {
+    width: 500px;
+    height: 500px;
+    border-radius: 250px;
+    position: absolute;
+    bottom: -250px;
+    right: -250px;
+    background-color: #333333;
+}
+    .rounded-red.bottom p {
+        margin-top: 165px;
+        margin-left: 80px;
+    }
+    .rounded-red.bottom p a {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+    }
+     .rounded-red.bottom p a:hover {
+         text-decoration: none;
+         color: #e30713;
+         font-size: 14px;
+         font-weight: bold;
+    }
+
+
+/*_____________________ CONNECTION FORM ________________________ */
+
+.pokeball-form {
+    width: 100%;
+}
+
+.pokeball-form img {
+    width: 42vw;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+}
+
+.form-container.conn {
+    display: block;
+    position: absolute;
+    top: 20vh;
+    left: 43vw;
+}
+
+.form-container.reg {
+    display: block;
+    position: absolute;
+    top: 20vh;
+    left: 42vw;
+}
+
+    .form-container form input {
+        display: block;
+        padding: 10px;
+        border-radius: 3px;
+        text-align: center;
+        text-transform: uppercase;
+        border: 2px solid #333333;
+    }
+
+    form input[type=text]{
+        margin: auto;
+        margin-bottom: 250px;
+    }
+
+    form input[type=password]{
+        margin: auto;
+        margin-bottom: 160px;
+    }
+
+    form input[type=submit]{
+        margin: auto;
+        background-color: #333333;
+        border: 0;
+        color: white;
+        cursor: pointer;
+    }
+
+      form input[type=submit]:hover{
+        margin: auto;
+        background-color: #333333;
+        border: 0;
+        color: #e30713;
+        cursor: pointer;
+    }
+
+
+

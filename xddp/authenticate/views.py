@@ -43,3 +43,7 @@ def authenticate(request):
     pwdhash = hashlib.pbkdf2_hmac('sha512', providedPassword.encode('utf-8'), salt.encode('ascii'), 100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == storedPassword
+
+def index(request):
+    context = { 'connect' : 'connection'}
+    return render(request, "connection.html",context)
