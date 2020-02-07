@@ -7,6 +7,10 @@ import requests
 # PLAYER AND SECURITY #
 #######################
 
+class Object(models.Model):
+    label = models.TextField()
+
+
 class Player(models.Model):
     """
     :param username
@@ -22,6 +26,7 @@ class Player(models.Model):
     name = models.TextField(null=True)
     surname = models.TextField(null=True)
     dob = models.TextField(null=True)
+    objects_list = models.ManyToManyField(Object, through='Inventory')
 
     def __str__(self):
         return self.username
@@ -34,9 +39,9 @@ class Player(models.Model):
         player.save()
         return player
 
-    def create(cls, username=None, password=None, email=None, surname=None, dob=None):
+    def create(cls, username=None, password=None, email=None, surname=None, dob=None, objects_list=None):
         player = Player(cls, username=username, password=password,
-                        email=email, surname=surname, dob=dob)
+                        email=email, surname=surname, dob=dob, objects_list=objects_list)
         player.save()
 
     @classmethod
@@ -292,3 +297,19 @@ class Move(models.Model):
         else:
             move = Move.objects.get(id_attack=id)
         return move
+
+
+class Inventory(models.Model):
+    """
+    :param FKEYPlayer player
+    :param FKEYObject item
+    :param quantity
+    """
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    item = models.ForeignKey(Object, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    @classmethod
+    def getInventory(cls, idPlayer):
+        bagOfHolding = Inventory.objects.filter(player=idPlayer)
+        return bagOfHolding
