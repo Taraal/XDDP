@@ -2,26 +2,11 @@ import hashlib, binascii, os
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from pokemon.models import Player
 
 from django.views.decorators.csrf import csrf_exempt
 
+from xddp.pokemon.models import Player
 
-# Create your views here.
-
-def insertUser(request):
-    try:
-        prenom = request.POST.get("prenom", "")
-        nom = request.POST.get("nom", "")
-        email = request.POST.get('email', "")
-        username = request.POST.get("username", "")
-        password = hashPass(request.POST.get("password"))
-        user_instance = Player.create(prenom, nom, username, email, password)
-        user_instance.save()
-    except Exception as e:
-        return HttpResponse(e)
-
-    return HttpResponse(True)
 
 def hashPass(password):
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
@@ -30,6 +15,7 @@ def hashPass(password):
 
     return (salt + pwdhash).decode('ascii')
 
+@csrf_exempt
 def authenticate(request):
     """
     Checks the hash of the input password
