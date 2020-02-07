@@ -74,7 +74,7 @@ html, body{
 }
 
 #content{
-    background-image: url("./assets/map2phone.png");
+    background-image: url("../assets/img/map2phone.png");
     background-size: cover;
     background-position: center;
     background-attachment: scroll;
