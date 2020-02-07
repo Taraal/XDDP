@@ -214,3 +214,25 @@ class Pokemon(models.Model):
         """
         pokeList = Pokemon.objects.all().filter(id__lte=id_max)
         return pokeList
+
+
+#########
+# ZONES #
+#########
+
+class Zone(models.Model):
+
+    name = models.TextField(null=True)
+    min_level = models.IntegerField(null=True)
+    max_level = models.IntegerField(null=True)
+    allowed_pokemon = models.ManyToManyField(Pokemon)
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def create(cls, name, allowed_pokemon, min_level=2, max_level=12):
+        new_zone = cls(name=name, allowed_pokemon=allowed_pokemon,
+                       min_level=min_level, max_level=max_level)
+
+        new_zone.save()
