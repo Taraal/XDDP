@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from pokemon.models import Player
 
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 
@@ -44,6 +46,12 @@ def authenticate(request):
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == storedPassword
 
+@csrf_exempt
 def index(request):
     context = { 'connect' : 'connection'}
-    return render(request, "connection.html",context)
+    return render(request, "connection.html", context)
+
+@csrf_exempt
+def register(request):
+    context = { 'register' : 'registration'}
+    return render(request, "registration.html", context)

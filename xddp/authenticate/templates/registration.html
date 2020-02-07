@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>Inscription</title>
-        <link rel="stylesheet" href="../../templates/css/style.css">
+        <link rel="stylesheet" href="{% static 'css/style' %}.css">
     </head>
     <body class="registration">
         <div class="op">
@@ -12,7 +13,7 @@
                 <h1 id="title-page">Inscription</h1>
             </div>
             <div class="pokeball-form">
-                <img src="../../templates/assets/img/pokeball.png" alt="">
+                <img src="{% static 'assets/img/pokeball' %}.png" alt="">
                 <div class="form-container reg">
                     <form action="" method="post">
                         <input type="text" placeholder="Identifiant" name="username">
@@ -22,7 +23,7 @@
                 </div>
             </div>
             <div class="rounded-red bottom">
-                <p><a href="connection.html">Déjà un dresseur</a></p>
+                <p><a href="../">Déjà un dresseur</a></p>
             </div>
         </div>
     </body>
