@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from pokemon.models import Player
 
+from django.views.decorators.csrf import csrf_exempt
+
 
 def hashPass(password):
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
@@ -12,6 +14,7 @@ def hashPass(password):
 
     return (salt + pwdhash).decode('ascii')
 
+@csrf_exempt
 def authenticate(request):
     """
     Checks the hash of the input password
