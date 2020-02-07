@@ -6,8 +6,11 @@
 >
 >python manage.py migrate
 
-Pour importer les données principales dans la base de données : 
+Pour importer les données principales dans la base de données :
+> /!\ Prend un certain temps à cause de PokeAPI !
+>
 >localhost:8000/internal/import/
+
 
 
 ## Fonctionnalités back-end : 
