@@ -112,22 +112,42 @@ def rollCritRate(idAttack):
     return critOrNot
 
 
-# def calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack):
-#     # Coefficients Multiplicateurs
-#     # le STAB => 1 ou 1,5
-#     # l'efficacité du type de la capacité; => 0 ou 0,5 ou 1 ou 2 ou 4
-#     # un nombre généré aléatoirement compris entre 0.85 et 1.
-#     try:
-#         pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
-#         pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
-#         Attack = Move.objects.filter(pk=idAttack)
-#         powerAttack = Attack.getMovePower(idAttack)
-#         typeAttack = Attack.getMoveType(idAttack)
+def calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack):
+    # Coefficients Multiplicateurs
+    # le STAB => 1 ou 1,5
+    # l'efficacité du type de la capacité; => 0 ou 0,5 ou 1 ou 2 ou 4
+    # un nombre généré aléatoirement compris entre 0.85 et 1.
+    try:
+        CM = 1
+        pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
+        pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
+        Move = Move.objects.filter(pk=idAttack)
 
-#     except Exception as e:
-#         return HttpResponse(e)
+        # STAB
+        for items in pokemonAttaquant.types:
+            if pokemonAttaquant.types[items] == Move.types:
+                CM = CM + 0.5
 
-#     return HttpResponse(json, content_type='application/json')
+        # Efficacité
+        efficiencyTypesValue = 1
+
+        if pokemonDefenseur.types.double_damage_from.filter(name=Move.types).exists():
+            efficiencyTypesValue = efficiencyTypesValue * 2
+        if pokemonDefenseur.types.half_damage_from.filter(name=Move.types).exists():
+            efficiencyTypesValue = efficiencyTypesValue / 2
+        if pokemonDefenseur.types.no_damage_from.filter(name=Move.types).exists():
+            efficiencyTypesValue = efficiencyTypesValue * 0
+
+            # Random roll
+        roll = random.randrange(0.85, 1)
+        CM = CM * roll
+
+        CM = CM * efficiencyTypesValue
+
+    except Exception as e:
+        return ValueError(e)
+
+    return CM
 
 
 def doFight(request, idPokemonAttaquant, idPokemonDefenseur, idAttack):
@@ -137,7 +157,7 @@ def doFight(request, idPokemonAttaquant, idPokemonDefenseur, idAttack):
         move = Move.objects.filter(pk=idAttack)
 
         dmgDone = ((((pokemonAttaquant.Level*0.4+2) *
-                     pokemonAttaquant.Atk * move.power)/(pokemonDefenseur.Def * 50))+2)
+                     pokemonAttaquant.Atk * move.power)/(pokemonDefenseur.Def * 50))+2) * calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack)
 
         json = serializers.serialize('json', dmgDone)
 
