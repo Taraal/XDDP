@@ -6,8 +6,8 @@ urlpatterns = [
     path('internal/', views.getAll, name='getAll'),
 
     path('internal/<int:idPoke>/', views.getOnePokemon, name='getOnePokemon'),
-    path('internal/own/', views.getOwnPokemon, name='getOwnPokes'),
-    path('internal/add/', views.addOneRandom, name='addOneRandom'),
+    path('internal/own/<int:idPlayer>/', views.getOwnPokemon, name='getOwnPokes'),
+    path('internal/add/random/<int:idPlayer>/', views.addOneRandom, name='addOneRandom'),
     path('internal/encounter/<int:idZone>', views.encounter, name='encounter'),
 
 

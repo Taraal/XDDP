@@ -128,7 +128,7 @@ class Type(models.Model):
     :param FKEYType no_damage_to(null)
     """
     id_type = models.IntegerField(null=True)
-    nom = models.CharField(max_length=50, null=True)
+    name = models.CharField(max_length=50, null=True)
     double_damage_from = models.ManyToManyField("self")
     double_damage_to = models.ManyToManyField("self")
     half_damage_from = models.ManyToManyField("self")
