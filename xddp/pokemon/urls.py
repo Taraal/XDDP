@@ -48,12 +48,38 @@ urlpatterns = [
     ####################################
 
 
-    #
+    # Front URLs
     path('', views.home, name='home'),
     path('Zone1/', views.Zone1, name='Zone1'),
     path('Zone2/', views.Zone2, name='Zone2'),
     path('Zone3/', views.Zone3, name='Zone3'),
     path('Zone4/', views.Zone4, name='Zone4'),
     path('FightPokemon/', views.FightPokemon, name='FightPokemon'),
+
+    # La liaison avec le front-end n'a pas pu être réalisée à temps
+    # Pour nous faire pardonner, voici un kangourou en ASCII
+    #
+    #                                             :e
+    #                                            'M$\
+    #                                           sf$$br
+    #                                         J\J\J$L$L
+    #                                       :d  )fM$$$$$r
+    #                                  ..P*\ .4MJP   '*\
+    #                         sed"""""" ser d$$$F
+    #                     .M\  ..JM$$$B$$$$BJ$MR  ...
+    #                    dF  nMMM$$$R$$$$$$$h"$ks$$"$$r
+    #                  J\.. .MMM8$$$$$LM$P\..'**\    *\
+    #                 d :d$r "M$$$$br'$M\d$R
+    #                J\MM\ *L   *M$B8MM$B.**
+    #               :fd$>  :fhr 'MRM$$M$$"
+    #               MJ$>    '5J5..M8$$>
+    #              :fMM     d$Fd$$R$$F
+    #              4M$P .$$*.J*$$**
+    #              M4$> '$>dRdF
+    #              MMM\   *L*B.
+    #             :$$F     ?k"Re
+    #           .$$P\        **'$$B...
+    #        :e$F"               '""""
+
 
 ]
