@@ -64,13 +64,33 @@ def getOwnPokemon(request, idPlayer):
     try:
         player = Player.objects.get(id=idPlayer)
         pokes = Pokemon.objects.filter(id_player=player)
-        #json = serializers.serialize('json', pokes)
+        json = serializers.serialize('json', pokes)
     except Exception as e :
         return HttpResponse(e)
 
-    return HttpResponse(pokes)
+    return HttpResponse(json, content_type='application/json')
 
+def addOnePokemon(request, idPlayer, idPoke):
+    """
+    Capture function adds a given Pokemon to a given player
+    :param idPlayer: id of the wanted player
+    :type idPlayer: int
+    :param idPoke: id of the wanted pokemon
+    :type idPoke: int
+    :return: Text response
+    """
+    try:
+        player = Player.objects.get(pk=idPlayer)
+        poke = Pokemon.objects.get(pk=idPoke)
+        poke.id_player = player
+        poke.save
 
+    except Exception as e:
+        return HttpResponse(e)
+
+    return True
+
+@csrf_exempt
 def addOneRandom(request, idPlayer):
     """
     :param idPlayer: Id of the player the Poke should be added
@@ -80,7 +100,8 @@ def addOneRandom(request, idPlayer):
 
         original_poke = Pokemon.objects.get(pk=random.randrange(1, 151))
 
-        new_poke = Pokemon(speed=original_poke.speed,
+        new_poke = Pokemon(name=original_poke.name,
+                           speed=original_poke.speed,
                            id_player=player,
                            id_poke=original_poke
                            )
