@@ -8,14 +8,8 @@ from django.http import HttpResponse
 from django.core import serializers
 
 from authenticate.views import hashPass
-from .models import Pokemon, Player, Zone
-from authenticate.views import hashPass
-from django.core import serializers
-from django.http import HttpResponse
-import random
-import requests
-import os
-import json
+from .models import Pokemon, Player, Zone, Move
+
 
 ##########
 # PLAYER #
@@ -267,11 +261,19 @@ def doFight(request, idPokemonAttaquant, idPokemonDefenseur, idAttack):
         pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
         pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
         move = Move.objects.filter(pk=idAttack)
+        dmgDone = 0
 
         dmgDone = ((((pokemonAttaquant.Level*0.4+2) *
                      pokemonAttaquant.Atk * move.power)/(pokemonDefenseur.Def * 50))+2) * calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack)
 
-        json = serializers.serialize('json', dmgDone)
+        pokemonDefenseur.current_hp = pokemonDefenseur.current_hp - dmgDone
+
+        if pokemonDefenseur.current_hp <= 0:
+            pokemonDefenseur.current_hp = 0
+
+        pokemonDefenseur.save()
+
+        json = serializers.serialize('json', pokemonDefenseur)
 
     except Exception as e:
         return HttpResponse(e)

@@ -134,6 +134,7 @@ class Pokemon(models.Model):
     :param atk
     :param defense
     :param hp
+    :param current_hp
     :param name
     :param FKEYType types
     :param FKEYPoke id_poke(null)
@@ -144,6 +145,7 @@ class Pokemon(models.Model):
     atk = models.IntegerField(null=True)
     defense = models.IntegerField(null=True)
     hp = models.IntegerField(null=True)
+    current_hp = models.IntegerField(null=True)
     name = models.CharField(max_length=50, null=True)
     level = models.IntegerField(null=True)
     exp = models.IntegerField(null=True)
@@ -228,7 +230,6 @@ class Pokemon(models.Model):
 
         return new_poke
 
-
     @classmethod
     def getList(cls, id_max=152):
         """
@@ -258,6 +259,8 @@ class Zone(models.Model):
                        min_level=min_level, max_level=max_level)
 
         new_zone.save()
+
+
 class Move(models.Model):
     """
     :param id_move
