@@ -3,6 +3,7 @@ import os
 import requests
 import random
 
+from django.shortcuts import render
 import random
 from django.http import HttpResponse
 from django.core import serializers
@@ -65,7 +66,7 @@ def getOwnPokemon(request):
     player = Player.objects.get(id=1)
     pokes = Pokemon.objects.get(id_player=player)
     #json = serializers.serialize('json', pokes)
-
+    
     return HttpResponse(pokes)
 
 
