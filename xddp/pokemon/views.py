@@ -51,3 +51,19 @@ def getAll(request):
 def home(request):
     context = {'home': 'home'}
     return render(request, "home.html", context)
+
+def Zone1(request):
+    context = {'Zone1': 'Zone1'}
+    return render(request, "Zone1.html", context)
+
+def Zone2(request):
+    context = {'Zone2': 'Zone2'}
+    return render(request, "Zone2.html", context)
+
+def Zone3(request):
+    context = {'Zone3': 'Zone3'}
+    return render(request, "Zone3.html", context)
+
+def Zone4(request):
+    context = {'Zone4': 'Zone4'}
+    return render(request, "Zone4.html", context)

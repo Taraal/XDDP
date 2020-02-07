@@ -1,16 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="static/css/base.css" rel="stylesheet">
-    <link href="../../authenticate/static/css/ContentZone2.css" rel="stylesheet">
+    <link href="{% static 'css/base' %}.css" rel="stylesheet">
+    <link href="{% static 'css/ContentZone2' %}.css" rel="stylesheet">
     <link rel="shortcut icon" href="static/assets/img/pb.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <title>Acceuil</title>
+    <title>Zone Montagne</title>
 </head>
 <body>
     <div id="header">
-        <h2 id="header_title" style="font-family: 'Roboto', sans-serif;">Accueil</h2>
+        <h2 id="header_title" style="font-family: 'Roboto', sans-serif;">Zone Montagne</h2>
         <div id="header_actions">
             <i class="fas fa-user" style="cursor: pointer;" href="#"></i>
             <i class="fas fa-cog" style="cursor: pointer;" href="#"></i>

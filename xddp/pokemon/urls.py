@@ -17,5 +17,8 @@ urlpatterns = [
     path('getownpokes/', views.getOwnPokemon, name='getOwnPokes'),
 
     path('', views.home, name='home'),
-
+    path('Zone1/', views.Zone1, name='Zone1'),
+    path('Zone2/', views.Zone2, name='Zone2'),
+    path('Zone3/', views.Zone3, name='Zone3'),
+    path('Zone4/', views.Zone4, name='Zone4'),
 ]
