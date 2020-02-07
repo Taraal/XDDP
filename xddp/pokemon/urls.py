@@ -20,6 +20,10 @@ urlpatterns = [
     path('internal/player/<int:idPlayer>/',
          views.getOnePlayer, name='getOnePlayer'),
 
-
-
+    path('internal/inventory/<int:idPlayer>/',
+         views.getPlayerInventory, name='getPlayerInventory'),
+    path('internal/inventory/add/<int:idPlayer>/<int:idItem>/',
+         views.addItem, name='addItem'),
+    path('internal/inventory/add/<int:idPlayer>/<int:idItem>/<int:nbrAdd>',
+         views.addItems, name='addItems'),
 ]

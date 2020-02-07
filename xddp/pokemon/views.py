@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.core import serializers
 
 from authenticate.views import hashPass
-from .models import Pokemon, Player, Zone, Move
+from .models import Pokemon, Player, Zone, Move, Inventory, Object, Type
 
 
 ##########
@@ -275,6 +275,47 @@ def doFight(request, idPokemonAttaquant, idPokemonDefenseur, idAttack):
 
         json = serializers.serialize('json', pokemonDefenseur)
 
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+
+
+##############
+# INVENTORY  #
+##############
+
+
+def getPlayerInventory(request, idPlayer):
+    try:
+        playerInventory = Inventory.objects.filter(player=idPlayer)
+        json = serializers.serialize('json', playerInventory)
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+
+
+def addItem(request, idPlayer, idItem, nbrAdd = 1):
+    try:
+        playerInventory = Inventory.objects.filter(
+            player=idPlayer, item=idItem)
+        playerInventory.quantity = playerInventory.quantity + nbrAdd
+        playerInventory.save()
+        json = serializers.serialize('json', playerInventory)
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+
+
+def addItems(request, idPlayer, idItem, nbrAdd):
+    try:
+        playerInventory = Inventory.objects.filter(
+            player=idPlayer, item=idItem)
+        playerInventory.quantity = playerInventory.quantity + nbrAdd
+        playerInventory.save()
+        json = serializers.serialize('json', playerInventory)
     except Exception as e:
         return HttpResponse(e)
 
