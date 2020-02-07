@@ -1,4 +1,3 @@
-import json
 import os
 import requests
 import random
@@ -15,7 +14,6 @@ from .models import Pokemon, Player, Zone, Move, Inventory, Object, Type
 # PLAYER #
 ##########
 
-
 def addPlayer(request):
     try:
         prenom = request.POST.get("prenom", "")
@@ -31,12 +29,12 @@ def addPlayer(request):
     return HttpResponse(True)
 
 
+
 def getPlayers(request):
     list = Player.objects.all()
     json = serializers.serialize('json', list)
 
     return HttpResponse(json, content_type="application/json")
-
 
 def getOnePlayer(request, idPlayer):
     try:
@@ -82,6 +80,13 @@ def getAll(request):
 
 
 def getOnePokemon(request, idPoke):
+    """
+    Gets a single pokemon from the database
+    :param idPoke: Id of the wanted pokemon
+    :type idPoke: int
+    :return: The pokemon and its stats
+    :rtype: json
+    """
     try:
         poke = Pokemon.objects.filter(pk=idPoke)
 
@@ -94,6 +99,13 @@ def getOnePokemon(request, idPoke):
 
 
 def encounter(request, idZone):
+    """
+    Returns an allowed pokemon in the specified zone
+    :param idZone: Id  of the current area
+    :type idZone: int
+    :return: Random pokemon within the allowed range
+    :rtype: pokemon/json
+    """
     try:
 
         zone = Zone.objects.get(pk=idZone)
@@ -117,23 +129,30 @@ def importAll(request):
     urlback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/"
     urlfront = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
 
-    # for i in range(1, 152):
+    for i in range(1, 152):
 
-    #    if not os.path.exists('xddp/pokemon/resources/sprites/back/' + str(i) + '.png'):
-    #        rback = requests.get(urlback + str(i) + ".png")
-    #        with open('xddp/pokemon/resources/sprites/back/' + str(i) + '.png', 'wb') as back:
-    #            back.write(rback.content)
+        if not os.path.exists('pokemon/ resources/sprites/back/' + str(i) + '.png'):
+            rback = requests.get(urlback + str(i) + ".png")
+            with open('pokemon/resources/sprites/back/' + str(i) + '.png', 'wb') as back:
+                back.write(rback.content)
 
-    #   if not os.path.exists('xddp/pokemon/resources/sprites/front/' + str(i) + '.png'):
-    #       with open('xddp/pokemon/resources/sprites/front/' + str(i) + '.png', 'wb') as front:
-    #            rfront = requests.get(urlfront + str(i) + ".png")
-    #            front.write(rfront.content)
+        if not os.path.exists('pokemon/resources/sprites/front/' + str(i) + '.png'):
+            with open('pokemon/resources/sprites/front/' + str(i) + '.png', 'wb') as front:
+                rfront = requests.get(urlfront + str(i) + ".png")
+                front.write(rfront.content)
+
+    ############
+    # POKEMONS #
+    ############
+
+    for i in range(1, 152):
+        Pokemon.ImportOne(i)
 
     #########
     # ZONES #
     #########
 
-    names = ['Forêt, Montagne, Mer, Volcan']
+    names = ['Forêt', 'Montagne', 'Mer', 'Volcan']
 
     allowed_pokes = [
         [1, 2, 3, 10, 11, 16, 20, 23],
@@ -142,15 +161,20 @@ def importAll(request):
         [4, 5, 6, 37, 58, 77, 126, 136]
     ]
 
-    for i in range(0, 3):
+    for i in range(0, 4):
+
         if not Zone.objects.filter(pk=i+1).exists():
 
             new_zone = Zone(name=names[i])
+            new_zone.save()
             for poke in allowed_pokes[i]:
-                new_zone.allowed_pokemon.add(Pokemon.objects.filter(pk=poke))
+                new_zone.allowed_pokemon.add(Pokemon.objects.get(pk=poke))
 
             new_zone.save()
 
+    qset = Zone.objects.all()
+
+    json = serializers.serialize('json', qset)
     #########
     # TYPES #
     #########
@@ -193,15 +217,19 @@ def importAll(request):
 
         Type.save()
 
-    ############
-    # POKEMONS #
-    ############
 
-    for i in range(1, 152):
-        Pokemon.ImportOne(i)
-###########
-# BATTLE  #
-###########
+    return HttpResponse(json, content_type='application/json')
+
+
+
+def purgeAll(request):
+
+    Zone.objects.all().delete()
+    Pokemon.objects.all()
+
+    os.system("../manage.py sqlsequencereset pokemon")
+
+    return HttpResponse('BDD purgée')
 
 
 def rollCritRate(idAttack):
