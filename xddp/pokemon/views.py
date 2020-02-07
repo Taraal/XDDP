@@ -1,12 +1,9 @@
 import json
-<<<<<<< HEAD
 import os
 import requests
 import random
 
-=======
 import random
->>>>>>> FEAT-Combats
 from django.http import HttpResponse
 from django.core import serializers
 
