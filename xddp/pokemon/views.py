@@ -1,3 +1,13 @@
+import json
+import os
+import requests
+import random
+
+import random
+from django.http import HttpResponse
+from django.core import serializers
+
+from authenticate.views import hashPass
 from .models import Pokemon, Player, Zone
 from authenticate.views import hashPass
 from django.core import serializers
