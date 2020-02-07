@@ -12,10 +12,13 @@ urlpatterns = [
     #ATTENTION A NE PAS FLOOD VOTRE BDD#
     path('internal/import/', views.importAll, name='importAll'),
     ####################################
+    path('internal/fight/<int:idPokemonAttaquant>/<int:idPokemonDefenseur>/<int:idAttack>/',
+         views.doFight, name='doFight'),
 
     path('internal/player/add/', views.addPlayer, name='addPlayer'),
     path('internal/player/', views.getPlayers, name='getPlayers'),
-    path('internal/player/<int:idPlayer>/', views.getOnePlayer, name='getOnePlayer'),
+    path('internal/player/<int:idPlayer>/',
+         views.getOnePlayer, name='getOnePlayer'),
 
 
 
