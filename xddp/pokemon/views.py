@@ -1,5 +1,6 @@
 import json
-
+import os
+import requests
 from django.http import HttpResponse
 from .models import Pokemon, Player
 
@@ -7,10 +8,46 @@ from django.core import serializers
 
 from authenticate.views import hashPass
 
-###################################################
-#TODO:                                            #
-#Stop being a lazy fuck and do some proper methods#
-###################################################
+#########
+# SETUP #
+#########
+
+def importAll(request):
+
+    ###########
+    # SPRITES #
+    ###########
+
+    urlback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/"
+    urlfront = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+
+    for i in range(1, 152):
+
+        if not os.path.exists('resources/sprites/back/' + str(i) + '.png'):
+            rback = requests.get(urlback + str(i) + ".png")
+            with open('resources/sprites/back/' + str(i) + '.png', 'wb') as back:
+                back.write(rback.content)
+
+        if not os.path.exists('resources/sprites/front/' + str(i) + '.png'):
+            with open('resources/sprites/front/' + str(i) + '.png', 'wb') as front:
+                rfront = requests.get(urlfront + str(i) + ".png")
+                front.write(rfront.content)
+
+        #########
+        # ZONES #
+        #########
+
+
+        #########
+        # TYPES #
+        #########
+
+        ############
+        # POKEMONS #
+        ############
+
+    for i in range(1, 152):
+        Pokemon.ImportOne(i)
 
 
 ##########

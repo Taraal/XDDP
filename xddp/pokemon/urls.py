@@ -10,7 +10,7 @@ urlpatterns = [
     path('internal/add/', views.addOneRandom, name='addOneRandom'),
 
     #ATTENTION A NE PAS FLOOD VOTRE BDD#
-    #path('import/', views.importAll, name='importAll'),
+    path('internal/import/', views.importAll, name='importAll'),
     ####################################
 
     path('internal/player/add/', views.addPlayer, name='addPlayer'),

@@ -207,7 +207,6 @@ class Pokemon(models.Model):
         return new_poke
 
 
-
     @classmethod
     def getList(cls, id_max=152):
         """
