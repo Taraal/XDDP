@@ -9,8 +9,11 @@ urlpatterns = [
     path('internal/own/', views.getOwnPokemon, name='getOwnPokes'),
     path('internal/add/', views.addOneRandom, name='addOneRandom'),
     path('internal/encounter/<int:idZone>', views.encounter, name='encounter'),
+
+
     #ATTENTION A NE PAS FLOOD VOTRE BDD#
     path('internal/import/', views.importAll, name='importAll'),
+    path('internal/purge/', views.purgeAll, name='purgeAll'),
     ####################################
 
     path('internal/player/add/', views.addPlayer, name='addPlayer'),
