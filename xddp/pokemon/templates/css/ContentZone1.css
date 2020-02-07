@@ -20,7 +20,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 200px; left: 200px;
+    top: 300px; left: 200px;
 }#content_map1:hover{
     background:linear-gradient(#29b86b, #44b97f);
     cursor: pointer;
@@ -35,7 +35,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 200px; left: 600px;
+    top: 300px; left: 600px;
 }#content_map2:hover{
     background:linear-gradient(#045026, #1b7544);
     cursor: pointer;

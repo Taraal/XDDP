@@ -20,7 +20,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 50px; left: 100px;
+    top: 410px; left: 200px;
 }#content_map1:hover{
     background:linear-gradient(#29b86b, #44b97f);
     cursor: pointer;
@@ -35,7 +35,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 150px; left: 250px;
+    top: 250px; left: 125px;
 }#content_map2:hover{
     background:linear-gradient(#af8027, #cf8b16);
     cursor: pointer;
@@ -50,7 +50,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 350px; left: 5px;
+    top: 180px; left: 500px;
 }#content_map3:hover{
     background:linear-gradient(#6b7fda, #2e51f0);
     cursor: pointer;
@@ -65,14 +65,14 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    top: 75px; left: 500px;
+    top: 25px; left: -50px;
 }#content_map4:hover{
     background:linear-gradient(#c51010, #b41515);
     cursor: pointer;
 }
 
 #content_map5{
-    background:linear-gradient(#a7bbf0, #6f80af);
+    background:linear-gradient(#ae5a5a, #be5858);
     color: white;
     text-shadow: 0px 2px 7px black;
     padding: 20px;
@@ -82,6 +82,23 @@
     position: relative;
     top: 350px; right: 70px;
 }#content_map5:hover{
-    background:linear-gradient(#96a2c2, #869ad3);
+    background:linear-gradient(#c26767, #c76d6d);
+    cursor: pointer;
+}
+
+#content_map6{
+    background:linear-gradient(#504759, #5a4f66);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 50px; right: 40px;
+}#content_map6:hover{
+    background:linear-gradient(#f50000, #f50000);
+    color: transparent;
+    text-shadow: 0px 0px 0px transparent;
     cursor: pointer;
 }
