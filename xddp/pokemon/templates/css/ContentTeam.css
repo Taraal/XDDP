@@ -17,19 +17,16 @@
 #team_column{
     grid-column: 1;
     grid-row: 1 / 6;
-    background-color: violet;
 }
 
 #pokemons{
     grid-column: 2;
     grid-row: 1 / 6;
-    background-color: black;
 }
 
 #specs{
     grid-column: 3;
     grid-row: 1 / 6;
-    background-color: red;
 }
 
 
