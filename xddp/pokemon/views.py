@@ -1,5 +1,5 @@
 import json
-
+import random
 from django.http import HttpResponse
 from .models import Pokemon, Player
 
@@ -32,12 +32,12 @@ def addPlayer(request):
     return HttpResponse(True)
 
 
-
 def getPlayers(request):
     list = Player.objects.all()
     json = serializers.serialize('json', list)
 
     return HttpResponse(json, content_type="application/json")
+
 
 def getOnePlayer(request, idPlayer):
     try:
@@ -53,14 +53,16 @@ def getOnePlayer(request, idPlayer):
 # POKEMON #
 ###########
 
+
 def getOwnPokemon(request):
-    #TODO:
-    #Get several pokes and serialize them into a nice json
+    # TODO:
+    # Get several pokes and serialize them into a nice json
     player = Player.objects.get(id=1)
     pokes = Pokemon.objects.get(id_player=player)
     #json = serializers.serialize('json', pokes)
 
     return HttpResponse(pokes)
+
 
 def addOneRandom(request):
     """
@@ -69,13 +71,13 @@ def addOneRandom(request):
     Pokemon.create()
     return HttpResponse("PokeAdded")
 
+
 def getAll(request):
     """
     Gets all Pokemon existing in the database
     """
     data = Pokemon.getList()
     json = serializers.serialize('json', data)
-
 
     return HttpResponse(json, content_type="application/json")
 
@@ -85,6 +87,59 @@ def getOnePokemon(request, idPoke):
         poke = Pokemon.objects.filter(pk=idPoke)
 
         json = serializers.serialize('json', poke)
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+
+###########
+# BATTLE  #
+###########
+
+
+def rollCritRate(idAttack):
+    try:
+        # Si l'attaque est une attaque differente d'une attaque physique ou speciale (donc pas de statuts)
+        # Lance un roll (1 chance sur 24)
+        # Si ça tombe sur 12, renvoi true, sinon false
+        critOrNot = False
+        valueRoll = randrange(1, 24)
+        if valueRoll == 12:
+            critOrNot = True
+    except Exception as e:
+        return ValueError(e)
+    return critOrNot
+
+
+# def calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack):
+#     # Coefficients Multiplicateurs
+#     # le STAB => 1 ou 1,5
+#     # l'efficacité du type de la capacité; => 0 ou 0,5 ou 1 ou 2 ou 4
+#     # un nombre généré aléatoirement compris entre 0.85 et 1.
+#     try:
+#         pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
+#         pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
+#         Attack = Move.objects.filter(pk=idAttack)
+#         powerAttack = Attack.getMovePower(idAttack)
+#         typeAttack = Attack.getMoveType(idAttack)
+
+#     except Exception as e:
+#         return HttpResponse(e)
+
+#     return HttpResponse(json, content_type='application/json')
+
+
+def doFight(request, idPokemonAttaquant, idPokemonDefenseur, idAttack):
+    try:
+        pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
+        pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
+        move = Move.objects.filter(pk=idAttack)
+
+        dmgDone = ((((pokemonAttaquant.Level*0.4+2) *
+                     pokemonAttaquant.Atk * move.power)/(pokemonDefenseur.Def * 50))+2)
+
+        json = serializers.serialize('json', dmgDone)
 
     except Exception as e:
         return HttpResponse(e)

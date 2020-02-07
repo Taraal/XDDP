@@ -35,7 +35,8 @@ class Player(models.Model):
         return player
 
     def create(cls, username=None, password=None, email=None, surname=None, dob=None):
-        player = Player(cls, username=username, password=password, email=email, surname=surname, dob=dob)
+        player = Player(cls, username=username, password=password,
+                        email=email, surname=surname, dob=dob)
         player.save()
 
     @classmethod
@@ -52,7 +53,6 @@ class Player(models.Model):
     def getPlayer(cls, username):
         try:
             player = Player.objects.get(username=username)
-
 
             return player
         except Exception as e:
@@ -107,6 +107,26 @@ class PokemonTeam(models.Model):
         return new_team
 
 
+class Type(models.Model):
+    """
+    :param id_type
+    :param nom
+    :param FKEYType double_damage_from(null)
+    :param FKEYType double_damage_to(null)
+    :param FKEYType half_damage_from(null)
+    :param FKEYType half_damage_to(null)
+    :param FKEYType no_damage_from(null)
+    :param FKEYType no_damage_to(null)
+    """
+    id_type = models.IntegerField(null=True)
+    nom = models.CharField(max_length=50, null=True)
+    double_damage_from = models.ManyToManyField("self")
+    double_damage_to = models.ManyToManyField("self")
+    half_damage_from = models.ManyToManyField("self")
+    half_damage_to = models.ManyToManyField("self")
+    no_damage_from = models.ManyToManyField("self")
+    no_damage_to = models.ManyToManyField("self")
+
 
 class Pokemon(models.Model):
     """
@@ -115,6 +135,7 @@ class Pokemon(models.Model):
     :param defense
     :param hp
     :param name
+    :param FKEYType types
     :param FKEYPoke id_poke(null)
     :param FKEYPlayer id_player
     :param FKEYTeam id_team
@@ -123,12 +144,14 @@ class Pokemon(models.Model):
     atk = models.IntegerField(null=True)
     defense = models.IntegerField(null=True)
     hp = models.IntegerField(null=True)
-    name = models.CharField(max_length=50,null=True)
+    name = models.CharField(max_length=50, null=True)
     level = models.IntegerField(null=True)
     exp = models.IntegerField(null=True)
+    types = models.ManyToManyField(Type)
     id_poke = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     id_player = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
-    id_team = models.ForeignKey(PokemonTeam, on_delete=models.CASCADE, null=True)
+    id_team = models.ForeignKey(
+        PokemonTeam, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name + str(self.id)
@@ -172,13 +195,12 @@ class Pokemon(models.Model):
         except Exception as e:
             return "Team not found"
 
-
         list = Pokemon.objects.filter(id_team=team)
 
         return list
 
-    #TODO:
-    #Add a proper create method for Pokemon
+    # TODO:
+    # Add a proper create method for Pokemon
     @classmethod
     def create(cls):
         player = Player.objects.get(id=1)
@@ -206,8 +228,6 @@ class Pokemon(models.Model):
 
         return new_poke
 
-
-
     @classmethod
     def getList(cls, id_max=152):
         """
@@ -215,3 +235,36 @@ class Pokemon(models.Model):
         """
         pokeList = Pokemon.objects.all().filter(id__lte=id_max)
         return pokeList
+
+
+class Move(models.Model):
+    """
+    :param id_move
+    :param name(null)
+    :param power(null)
+    :param FKEYType types
+    """
+    name = models.CharField(max_length=50, null=True)
+    power = models.IntegerField(null=True)
+    types = models.ManyToManyField(Type)
+
+    @classmethod
+    def ImportOne(cls, id):
+        """
+        Allows one to import a specific move from pokeapi
+        :param id:
+        """
+
+        if not Move.objects.filter(id_attack=id).exists():
+            url = "https://pokeapi.co/api/v2/move/"
+
+            data = requests.get(url + str(id)).json()
+            name = data['name']
+            power = data['power']
+            types = data['type'][1]
+
+            move = cls(name=name, power=power, types=types)
+            move.save()
+        else:
+            move = Move.objects.get(id_attack=id)
+        return move
