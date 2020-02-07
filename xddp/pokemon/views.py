@@ -1,21 +1,16 @@
-import json
-<<<<<<< HEAD
-import os
-import requests
-import random
-
-=======
-import random
->>>>>>> FEAT-Combats
-from django.http import HttpResponse
-from django.core import serializers
-
-from authenticate.views import hashPass
 from .models import Pokemon, Player, Zone
+from authenticate.views import hashPass
+from django.core import serializers
+from django.http import HttpResponse
+import random
+import requests
+import os
+import json
 
 ##########
 # PLAYER #
 ##########
+
 
 def addPlayer(request):
     try:
@@ -93,6 +88,7 @@ def getOnePokemon(request, idPoke):
 
     return HttpResponse(json, content_type='application/json')
 
+
 def encounter(request, idZone):
     try:
 
@@ -108,6 +104,7 @@ def encounter(request, idZone):
 # SETUP #
 #########
 
+
 def importAll(request):
     ###########
     # SPRITES #
@@ -116,15 +113,15 @@ def importAll(request):
     urlback = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/"
     urlfront = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
 
-    #for i in range(1, 152):
+    # for i in range(1, 152):
 
     #    if not os.path.exists('xddp/pokemon/resources/sprites/back/' + str(i) + '.png'):
     #        rback = requests.get(urlback + str(i) + ".png")
     #        with open('xddp/pokemon/resources/sprites/back/' + str(i) + '.png', 'wb') as back:
     #            back.write(rback.content)
 
-     #   if not os.path.exists('xddp/pokemon/resources/sprites/front/' + str(i) + '.png'):
-     #       with open('xddp/pokemon/resources/sprites/front/' + str(i) + '.png', 'wb') as front:
+    #   if not os.path.exists('xddp/pokemon/resources/sprites/front/' + str(i) + '.png'):
+    #       with open('xddp/pokemon/resources/sprites/front/' + str(i) + '.png', 'wb') as front:
     #            rfront = requests.get(urlfront + str(i) + ".png")
     #            front.write(rfront.content)
 
@@ -153,6 +150,44 @@ def importAll(request):
     #########
     # TYPES #
     #########
+     # Creation de tous les types, puis les save
+    rangeNumberTypes = 0
+    url = "https://pokeapi.co/api/v2/type/"
+    data = requests.get(url).json()
+    rangeNumberTypes = data['count']
+    for a in range(0, rangeNumberTypes - 1):
+        name = data['results'][a]['name']
+        Type = cls(name=name)
+        Type.save()
+    # Creation de tous les types, puis les save
+    # type crée.doubledmgfrom.add(type.object.get(name=nameoftype))
+
+    for t in range(1, rangeNumberTypes):
+        url = "https://pokeapi.co/api/v2/type/"
+
+        data = requests.get(url + str(t)).json()
+        name = data['name']
+
+        for item in data['damage_relations'][0]:
+            Type.double_damage_from.add(Type.object.get(
+                name=data['damage_relations'][0][item]['name']))
+        for item in data['damage_relations'][1]:
+            Type.double_damage_to.add(Type.object.get(
+                name=data['damage_relations'][1][item]['name']))
+        for item in data['damage_relations'][2]:
+            Type.half_damage_from.add(Type.object.get(
+                name=data['damage_relations'][2][item]['name']))
+        for item in data['damage_relations'][3]:
+            Type.half_damage_to.add(Type.object.get(
+                name=data['damage_relations'][3][item]['name']))
+        for item in data['damage_relations'][4]:
+            Type.no_damage_from.add(Type.object.get(
+                name=data['damage_relations'][4][item]['name']))
+        for item in data['damage_relations'][5]:
+            Type.no_damage_to.add(Type.object.get(
+                name=data['damage_relations'][5][item]['name']))
+
+        Type.save()
 
     ############
     # POKEMONS #
