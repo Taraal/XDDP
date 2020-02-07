@@ -103,6 +103,10 @@ def Zone4(request):
     context = {'Zone4': 'Zone4'}
     return render(request, "Zone4.html", context)
 
+def FightPokemon(request):
+    context = {'FightPokemon': 'FightPokemon'}
+    return render(request, "FightPokemon.html", context)
+
 
 def getOnePokemon(request, idPoke):
     try:
