@@ -16,4 +16,6 @@ urlpatterns = [
     path('getplayers/', views.getPlayers, name='getPlayers'),
     path('getownpokes/', views.getOwnPokemon, name='getOwnPokes'),
 
+    path('', views.home, name='home'),
+
 ]

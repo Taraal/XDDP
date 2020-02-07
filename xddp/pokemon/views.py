@@ -1,5 +1,6 @@
 import json
 
+from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Pokemon, Player
 
@@ -47,3 +48,6 @@ def getAll(request):
 
     return HttpResponse(json, content_type="application/json")
 
+def home(request):
+    context = {'home': 'home'}
+    return render(request, "home.html", context)
