@@ -1,0 +1,42 @@
+#content{
+    background-image: url("../assets/img/foret.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+    background-repeat: no-repeat; 
+    grid-area: content;
+    background-color: white;
+    margin: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 13px 0px black;
+}
+
+#content_map1{
+    background:linear-gradient(#0b753b, #19683d);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 200px; left: 200px;
+}#content_map1:hover{
+    background:linear-gradient(#29b86b, #44b97f);
+    cursor: pointer;
+}
+
+#content_map2{
+    background:linear-gradient(#054723, #074121);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 200px; left: 600px;
+}#content_map2:hover{
+    background:linear-gradient(#045026, #1b7544);
+    cursor: pointer;
+}

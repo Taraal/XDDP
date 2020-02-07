@@ -4,18 +4,21 @@ from . import views
 
 urlpatterns = [
 
-
     # Pokemon URLs
     path('internal/', views.getAll, name='getAll'),
     path('internal/<int:idPoke>/', views.getOnePokemon, name='getOnePokemon'),
     path('internal/own/<int:idPlayer>/', views.getOwnPokemon, name='getOwnPokes'),
-
     # Ajout des pokémons
     path('internal/add/random/<int:idPlayer>/', views.addOneRandom, name='addOneRandom'),
     path('internal/add/<int:idPoke>/<int:idPlayer>/', views.addOnePokemon, name='addOnePokemon'),
-
     # Rencontre d'un pokémon par zone
     path('internal/encounter/<int:idZone>', views.encounter, name='encounter'),
+
+    # Pokemon Team URLs
+    path('internal/team/add/', views.addTeam, name='addTeam'),
+    path('internal/team/add/pokemon/', views.addPokemonToTeam, name='addPokemonToTeam'),
+    path('internal/team/<int:idPlayer>', views.addPokemonToTeam, name='getAllTeamsFromPlayer'),
+    path('internal/team/pokemon/<int:idTeam>', views.getPokemonFromTeam, name='getPokemonFromTeam'),
 
     # Fight URLs
     path('internal/fight/<int:idPokemonAttaquant>/<int:idPokemonDefenseur>/<int:idAttack>/',
@@ -37,10 +40,20 @@ urlpatterns = [
     path('internal/inventory/add/<int:idPlayer>/<int:idItem>/<int:nbrAdd>',
          views.addItems, name='addItems'),
 
+    # Setup URLs
     # ATTENTION A NE PAS FLOOD VOTRE BDD#
     path('internal/import/', views.importAll, name='importAll'),
     path('internal/purge/', views.purgeAll, name='purgeAll'),
     # Si erreur : delete db.sqlite3 puis migrate
     ####################################
+
+
+    #
+    path('', views.home, name='home'),
+    path('Zone1/', views.Zone1, name='Zone1'),
+    path('Zone2/', views.Zone2, name='Zone2'),
+    path('Zone3/', views.Zone3, name='Zone3'),
+    path('Zone4/', views.Zone4, name='Zone4'),
+    path('FightPokemon/', views.FightPokemon, name='FightPokemon'),
 
 ]

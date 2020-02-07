@@ -32,9 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'authenticate.apps.AuthenticateConfig',
-    'arena.apps.ArenaConfig',
-    'adventure.apps.AdventureConfig',
-    'inventory.apps.InventoryConfig',
     'pokemon.apps.PokemonConfig',
     'django.contrib.admin',
     'django.contrib.auth',

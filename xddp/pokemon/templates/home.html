@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/base' %}.css" rel="stylesheet">
+    <link href="{% static 'css/ContentHome' %}.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static '/assets/img/pb' %}.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <title>Accueil</title>
+</head>
+<body>
+    <div id="header">
+        <h2 id="header_title" style="font-family: 'Roboto', sans-serif;">Accueil</h2>
+        <div id="header_actions">
+            <i class="fas fa-user" style="cursor: pointer;" href="#"></i>
+            <i class="fas fa-cog" style="cursor: pointer;" href="#"></i>
+            <i class="fas fa-power-off" style="cursor: pointer;" href="#"></i>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="sidebar">
+            <button class="sidebar_btn" onclick="window.location.href=''">Carte</button>
+            <button class="sidebar_btn">Equipe</button>
+            <button class="sidebar_btn">Ville</button>
+            <button class="sidebar_btn">Menu 4</button>
+            <button class="sidebar_btn">Menu 5</button>
+            <button class="sidebar_btn">Menu 6</button>
+            <button class="sidebar_btn">Menu 7</button>
+            <button class="sidebar_btn">Menu 8</button>
+        </div>
+        <div id="content">
+            <a id="content_map1" href="Zone1">Zone Forêt</a>
+            <a id="content_map2" href="Zone2">Zone Montagne</a>
+            <a id="content_map3" href="Zone3">Zone Mer</a>
+            <a id="content_map4" href="Zone4">Zone Volcan</a>
+            <a id="content_map5" href="#">Ville</a>
+        </div>
+        <div id="footer">
+            <h5>Pokemon - Python</h5>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>

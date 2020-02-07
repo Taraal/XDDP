@@ -136,6 +136,38 @@ class Type(models.Model):
     no_damage_from = models.ManyToManyField("self")
     no_damage_to = models.ManyToManyField("self")
 
+class Move(models.Model):
+    """
+    :param id_move
+    :param name(null)
+    :param power(null)
+    :param FKEYType types
+    """
+    name = models.CharField(max_length=50, null=True)
+    power = models.IntegerField(null=True)
+    types = models.ManyToManyField(Type)
+
+    @classmethod
+    def ImportOne(cls, id):
+        """
+        Allows one to import a specific move from pokeapi
+        :param id:
+        """
+
+        if not Move.objects.filter(id_attack=id).exists():
+            url = "https://pokeapi.co/api/v2/move/"
+
+            data = requests.get(url + str(id)).json()
+            name = data['name']
+            power = data['power']
+            types = data['type'][1]
+
+            move = cls(name=name, power=power, types=types)
+            move.save()
+        else:
+            move = Move.objects.get(id_attack=id)
+        return move
+
 
 class Pokemon(models.Model):
     """
@@ -163,6 +195,7 @@ class Pokemon(models.Model):
     id_player = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
     id_team = models.ForeignKey(
         PokemonTeam, on_delete=models.CASCADE, null=True)
+    moves = models.ManyToManyField(Move)
 
     def __str__(self):
         return self.name + str(self.id)
@@ -268,39 +301,6 @@ class Zone(models.Model):
                        min_level=min_level, max_level=max_level)
 
         new_zone.save()
-
-
-class Move(models.Model):
-    """
-    :param id_move
-    :param name(null)
-    :param power(null)
-    :param FKEYType types
-    """
-    name = models.CharField(max_length=50, null=True)
-    power = models.IntegerField(null=True)
-    types = models.ManyToManyField(Type)
-
-    @classmethod
-    def ImportOne(cls, id):
-        """
-        Allows one to import a specific move from pokeapi
-        :param id:
-        """
-
-        if not Move.objects.filter(id_attack=id).exists():
-            url = "https://pokeapi.co/api/v2/move/"
-
-            data = requests.get(url + str(id)).json()
-            name = data['name']
-            power = data['power']
-            types = data['type'][1]
-
-            move = cls(name=name, power=power, types=types)
-            move.save()
-        else:
-            move = Move.objects.get(id_attack=id)
-        return move
 
 
 class Inventory(models.Model):

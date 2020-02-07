@@ -1,0 +1,87 @@
+#content{
+    background-image: url("../assets/img/map2phone.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+    background-repeat: no-repeat; 
+    grid-area: content;
+    background-color: white;
+    margin: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 13px 0px black;
+}
+
+#content_map1{
+    background:linear-gradient(#0b753b, #19683d);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 50px; left: 100px;
+}#content_map1:hover{
+    background:linear-gradient(#29b86b, #44b97f);
+    cursor: pointer;
+}
+
+#content_map2{
+    background:linear-gradient(#6d4c0f, #6d4e19);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 150px; left: 250px;
+}#content_map2:hover{
+    background:linear-gradient(#af8027, #cf8b16);
+    cursor: pointer;
+}
+
+#content_map3{
+    background:linear-gradient(#3651c7, #102dad);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 350px; left: 5px;
+}#content_map3:hover{
+    background:linear-gradient(#6b7fda, #2e51f0);
+    cursor: pointer;
+}
+
+#content_map4{
+    background:linear-gradient(#630404, #8f1111);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 75px; left: 500px;
+}#content_map4:hover{
+    background:linear-gradient(#c51010, #b41515);
+    cursor: pointer;
+}
+
+#content_map5{
+    background:linear-gradient(#a7bbf0, #6f80af);
+    color: white;
+    text-shadow: 0px 2px 7px black;
+    padding: 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    top: 350px; right: 70px;
+}#content_map5:hover{
+    background:linear-gradient(#96a2c2, #869ad3);
+    cursor: pointer;
+}

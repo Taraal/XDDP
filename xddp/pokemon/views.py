@@ -2,13 +2,14 @@ import os
 import requests
 import random
 
+from django.shortcuts import render
 import random
 from django.http import HttpResponse
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
 from authenticate.views import hashPass
-from .models import Pokemon, Player, Zone, Move, Inventory,     Object, Type
+from .models import Pokemon, Player, Zone, Move, Inventory, PokemonTeam, Type
 
 
 ##########
@@ -124,6 +125,70 @@ def getAll(request):
     return HttpResponse(json, content_type="application/json")
 
 
+#################
+# Pokemon Teams #
+#################
+
+def addTeam(request):
+    """
+    Adds a team to a specified player
+    :param id_player: id of the wanted player
+    :type id_player: int
+    :param team_name : name of the team to be added
+    :type team_name: string
+    """
+    try:
+        idPlayer = request.POST.get('id_player')
+        teamName = request.POST.get('team_name')
+
+        team = PokemonTeam(name=teamName)
+        team.save()
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse("Equipe créée")
+
+def addPokemonToTeam(request):
+    """
+    Adds a specified pokemon to a specified team
+    :param id_poke: Id of the pokemon to be added
+    :type id_poke: int
+    :param id_team: Id of the desired team
+    :type id_team: int
+    """
+    try:
+        id_poke = request.POST.get('id_poke')
+        id_team = request.POST.get('id_team')
+
+        poke = Pokemon.objects.get(pk=id_poke)
+        poke.id_team = PokemonTeam.objects.get(pk=id_team)
+        poke.save()
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse("Pokémon ajouté")
+
+def getAllTeamsFromPlayer(request, idPlayer):
+
+    list = PokemonTeam.getAllFromPlayer(id_player=idPlayer)
+    json = serializers.serialize('json', list)
+
+    return HttpResponse(json, content_type='application/json')
+
+def getPokemonFromTeam(request, idTeam):
+
+    try:
+        pokes = Pokemon.objects.filter(id_team=idTeam)
+        json = serializers.serialize('json', pokes)
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    return HttpResponse(json, content_type='application/json')
+
+
 def getOnePokemon(request, idPoke):
     """
     Gets a single pokemon from the database
@@ -161,10 +226,39 @@ def encounter(request, idZone):
         return HttpResponse(e)
 
     return HttpResponse(json, content_type='application/json')
+
+#############
+# FRONT-END #
+#############
+
+def home(request):
+    context = {'home': 'home'}
+    return render(request, "home.html", context)
+
+def Zone1(request):
+    context = {'Zone1': 'Zone1'}
+    return render(request, "Zone1.html", context)
+
+def Zone2(request):
+    context = {'Zone2': 'Zone2'}
+    return render(request, "Zone2.html", context)
+
+def Zone3(request):
+    context = {'Zone3': 'Zone3'}
+    return render(request, "Zone3.html", context)
+
+def Zone4(request):
+    context = {'Zone4': 'Zone4'}
+    return render(request, "Zone4.html", context)
+
+def FightPokemon(request):
+    context = {'FightPokemon': 'FightPokemon'}
+    return render(request, "FightPokemon.html", context)
+
+
 #########
 # SETUP #
 #########
-
 
 def importAll(request):
     ###########

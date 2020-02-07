@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/base' %}.css" rel="stylesheet">
+    <link href="{% static 'css/fight' %}.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static '/assets/img/pb' %}.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <title>Combat Pokémon</title>
+</head>
+<body>
+    <div id="header">
+        <h2 id="header_title" style="font-family: 'Roboto', sans-serif;">Zone Forêt</h2>
+        <div id="header_actions">
+            <i class="fas fa-user" style="cursor: pointer;" href="#"></i>
+            <i class="fas fa-cog" style="cursor: pointer;" href="#"></i>
+            <i class="fas fa-power-off" style="cursor: pointer;" href="#"></i>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="sidebar">
+            <button class="sidebar_btn" onclick="window.location.href=''">Carte</button>
+            <button class="sidebar_btn">Equipe</button>
+            <button class="sidebar_btn">Ville</button>
+            <button class="sidebar_btn">Menu 4</button>
+            <button class="sidebar_btn">Menu 5</button>
+            <button class="sidebar_btn">Menu 6</button>
+            <button class="sidebar_btn">Menu 7</button>
+            <button class="sidebar_btn">Menu 8</button>
+        </div>
+        <div id="content">
+            <div class="namePokemon">
+                <h1><b>Pikachu</b></h1>
+                <p>Nombre de vies : 15</p>
+            </div>
+            <div class="picturepok1">
+                <img src="{% static '/assets/img/pb' %}.png" alt="">
+            </div>
+            <div class="namePokemon-2">
+                <h1><b>Salamèche</b></h1>
+                <p>Nombre de vies : 15</p>
+            </div>
+            <div class="picturepok2">
+                <img src="{% static '/assets/img/pb' %}.png" alt="">
+            </div>
+            <div class="attack-actions">
+                <bouton class="attack">jkoreorok</bouton>
+                <bouton class="attack">jkoreorok</bouton>
+                <bouton class="attack">jkoreorok</bouton>
+                <bouton class="attack">jkoreorok</bouton>
+            </div>
+        </div>
+        <div id="footer">
+            <h5>Pokemon - Python</h5>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
