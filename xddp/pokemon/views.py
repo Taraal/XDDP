@@ -29,12 +29,12 @@ def addPlayer(request):
     return HttpResponse(True)
 
 
-
 def getPlayers(request):
     list = Player.objects.all()
     json = serializers.serialize('json', list)
 
     return HttpResponse(json, content_type="application/json")
+
 
 def getOnePlayer(request, idPlayer):
     try:
@@ -148,6 +148,17 @@ def importAll(request):
     for i in range(1, 152):
         Pokemon.ImportOne(i)
 
+    ###########
+    # OBJECTS #
+    ###########
+
+    # id = 1 potion
+    # id = 2 pokeball
+    object = Object(label="potion")
+    object.save()
+    object = Object(label="pokeball")
+    object.save()
+
     #########
     # ZONES #
     #########
@@ -178,7 +189,7 @@ def importAll(request):
     #########
     # TYPES #
     #########
-     # Creation de tous les types, puis les save
+    # Creation de tous les types, puis les save
     rangeNumberTypes = 0
     url = "https://pokeapi.co/api/v2/type/"
     data = requests.get(url).json()
@@ -217,9 +228,7 @@ def importAll(request):
 
         Type.save()
 
-
     return HttpResponse(json, content_type='application/json')
-
 
 
 def purgeAll(request):
@@ -324,7 +333,7 @@ def getPlayerInventory(request, idPlayer):
     return HttpResponse(json, content_type='application/json')
 
 
-def addItem(request, idPlayer, idItem, nbrAdd = 1):
+def addItem(request, idPlayer, idItem, nbrAdd=1):
     try:
         playerInventory = Inventory.objects.filter(
             player=idPlayer, item=idItem)
