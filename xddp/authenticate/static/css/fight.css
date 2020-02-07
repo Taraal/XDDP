@@ -40,3 +40,20 @@
     bottom: 100px;
     right: 80px;
 }
+
+.picturepok1 img {
+    width: 200px;
+    margin: 90px 20px;
+}
+
+
+.picturepok2{
+    position: absolute;
+    right: 160px;
+    top: 0;
+}
+
+.picturepok2 img {
+    width: 200px;
+    margin: 100px 20px;
+}

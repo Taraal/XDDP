@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <link href="{% static 'css/base' %}.css" rel="stylesheet">
     <link href="{% static 'css/fight' %}.css" rel="stylesheet">
-    <link rel="shortcut icon" href="static/assets/img/pb.png" type="image/png">
+    <link rel="shortcut icon" href="{% static '/assets/img/pb' %}.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <title>Combat Pokémon</title>
 </head>
@@ -38,9 +38,15 @@
                 <h1><b>Pikachu</b></h1>
                 <p>Nombre de vies : 15</p>
             </div>
+            <div class="picturepok1">
+                <img src="{% static '/assets/img/pb' %}.png" alt="">
+            </div>
             <div class="namePokemon-2">
                 <h1><b>Salamèche</b></h1>
                 <p>Nombre de vies : 15</p>
+            </div>
+            <div class="picturepok2">
+                <img src="{% static '/assets/img/pb' %}.png" alt="">
             </div>
             <div class="attack-actions">
                 <bouton class="attack">jkoreorok</bouton>
