@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from django.views.decorators.csrf import csrf_exempt
 
-from xddp.pokemon.models import Player
+from pokemon.models import Player
 
 
 def hashPass(password):

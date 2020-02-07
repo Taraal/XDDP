@@ -1,4 +1,4 @@
-import Move as Move
+
 from django.shortcuts import render
 import random
 from django.http import HttpResponse
