@@ -8,6 +8,9 @@ import requests
 #######################
 
 class Object(models.Model):
+    """
+    :param label
+    """
     label = models.TextField()
 
 
@@ -19,6 +22,7 @@ class Player(models.Model):
     :param name
     :param surname
     :param dob (DateOfBirth)
+    :param MTMObject objects_list
     """
     username = models.TextField(null=True)
     password = models.TextField(null=True)
