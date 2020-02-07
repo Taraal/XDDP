@@ -5,15 +5,17 @@ import random
 import random
 from django.http import HttpResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 from authenticate.views import hashPass
-from .models import Pokemon, Player, Zone, Move, Inventory, Object, Type
+from .models import Pokemon, Player, Zone, Move, Inventory,     Object, Type
 
 
 ##########
 # PLAYER #
 ##########
 
+@csrf_exempt
 def addPlayer(request):
     try:
         prenom = request.POST.get("prenom", "")
@@ -21,7 +23,8 @@ def addPlayer(request):
         email = request.POST.get('email', "")
         username = request.POST.get("username", "")
         password = hashPass(request.POST.get("password"))
-        user_instance = Player.create(prenom, nom, username, email, password)
+        user_instance = Player(name=prenom, surname=nom,
+                               username=username, email=email, password=password)
         user_instance.save()
     except Exception as e:
         return HttpResponse(e)
@@ -51,20 +54,42 @@ def getOnePlayer(request, idPlayer):
 ###########
 
 
-def getOwnPokemon(request):
-    # TODO:
-    # Get several pokes and serialize them into a nice json
-    player = Player.objects.get(id=1)
-    pokes = Pokemon.objects.get(id_player=player)
-    #json = serializers.serialize('json', pokes)
+def getOwnPokemon(request, idPlayer):
+    """
+    Returns all pokemons of the player
+    :param idPlayer: id of the wanted player
+    :type idPlayer: int
+    :return: All the player's pokemon
+    :rtype: json
+    """
+    try:
+        player = Player.objects.get(id=idPlayer)
+        pokes = Pokemon.objects.filter(id_player=player)
+        #json = serializers.serialize('json', pokes)
+    except Exception as e:
+        return HttpResponse(e)
 
     return HttpResponse(pokes)
 
 
-def addOneRandom(request):
+def addOneRandom(request, idPlayer):
     """
-    :param playerId: Id of the player the Poke should be added
+    :param idPlayer: Id of the player the Poke should be added
     """
+    try:
+        player = Player.objects.get(pk=idPlayer)
+
+        original_poke = Pokemon.objects.get(pk=random.randrange(1, 151))
+
+        new_poke = Pokemon(speed=original_poke.speed,
+                           id_player=player,
+                           id_poke=original_poke
+                           )
+
+        new_poke.save()
+
+    except Exception as e:
+        return HttpResponse(e)
     Pokemon.create()
     return HttpResponse("PokeAdded")
 
@@ -186,18 +211,20 @@ def importAll(request):
     qset = Zone.objects.all()
 
     json = serializers.serialize('json', qset)
+
     #########
     # TYPES #
     #########
+
     # Creation de tous les types, puis les save
     rangeNumberTypes = 0
     url = "https://pokeapi.co/api/v2/type/"
     data = requests.get(url).json()
-    rangeNumberTypes = data['count']
-    for a in range(0, rangeNumberTypes - 1):
+    rangeNumberTypes = data['count'] - 2
+    for a in range(0, rangeNumberTypes):
         name = data['results'][a]['name']
-        Type = cls(name=name)
-        Type.save()
+        type = Type(name=name)
+        type.save()
     # Creation de tous les types, puis les save
     # type crée.doubledmgfrom.add(type.object.get(name=nameoftype))
 
@@ -207,26 +234,26 @@ def importAll(request):
         data = requests.get(url + str(t)).json()
         name = data['name']
 
-        for item in data['damage_relations'][0]:
-            Type.double_damage_from.add(Type.object.get(
-                name=data['damage_relations'][0][item]['name']))
-        for item in data['damage_relations'][1]:
-            Type.double_damage_to.add(Type.object.get(
-                name=data['damage_relations'][1][item]['name']))
-        for item in data['damage_relations'][2]:
-            Type.half_damage_from.add(Type.object.get(
-                name=data['damage_relations'][2][item]['name']))
-        for item in data['damage_relations'][3]:
-            Type.half_damage_to.add(Type.object.get(
-                name=data['damage_relations'][3][item]['name']))
-        for item in data['damage_relations'][4]:
-            Type.no_damage_from.add(Type.object.get(
-                name=data['damage_relations'][4][item]['name']))
-        for item in data['damage_relations'][5]:
-            Type.no_damage_to.add(Type.object.get(
-                name=data['damage_relations'][5][item]['name']))
+        for index, item in enumerate(data['damage_relations']['double_damage_from']):
+            type.double_damage_from.add(Type.objects.get(
+                name=data['damage_relations']['double_damage_from'][index]['name']))
+        for index, item in enumerate(data['damage_relations']['double_damage_to']):
+            type.double_damage_to.add(Type.objects.get(
+                name=data['damage_relations']['double_damage_to'][index]['name']))
+        for index, item in enumerate(data['damage_relations']['half_damage_from']):
+            type.half_damage_from.add(Type.objects.get(
+                name=data['damage_relations']['half_damage_from'][index]['name']))
+        for index, item in enumerate(data['damage_relations']['half_damage_to']):
+            type.half_damage_to.add(Type.objects.get(
+                name=data['damage_relations']['half_damage_to'][index]['name']))
+        for index, item in enumerate(data['damage_relations']['no_damage_from']):
+            type.no_damage_from.add(Type.objects.get(
+                name=data['damage_relations']['no_damage_from'][index]['name']))
+        for index, item in enumerate(data['damage_relations']['no_damage_to']):
+            type.no_damage_to.add(Type.objects.get(
+                name=data['damage_relations']['no_damage_to'][index]['name']))
 
-        Type.save()
+        type.save()
 
     return HttpResponse(json, content_type='application/json')
 
@@ -234,7 +261,8 @@ def importAll(request):
 def purgeAll(request):
 
     Zone.objects.all().delete()
-    Pokemon.objects.all()
+    Pokemon.objects.all().delete()
+    Type.objects.all().delete()
 
     os.system("../manage.py sqlsequencereset pokemon")
 
@@ -247,7 +275,7 @@ def rollCritRate(idAttack):
         # Lance un roll (1 chance sur 24)
         # Si ça tombe sur 12, renvoi true, sinon false
         critOrNot = False
-        valueRoll = randrange(1, 24)
+        valueRoll = random.randrange(1, 24)
         if valueRoll == 12:
             critOrNot = True
     except Exception as e:
@@ -264,21 +292,21 @@ def calculMultiplierCoefficient(idPokemonAttaquant, idPokemonDefenseur, idAttack
         CM = 1
         pokemonAttaquant = Pokemon.objects.filter(pk=idPokemonAttaquant)
         pokemonDefenseur = Pokemon.objects.filter(pk=idPokemonDefenseur)
-        Move = Move.objects.filter(pk=idAttack)
+        move = Move.objects.filter(pk=idAttack)
 
         # STAB
         for items in pokemonAttaquant.types:
-            if pokemonAttaquant.types[items] == Move.types:
+            if pokemonAttaquant.types[items] == move.types:
                 CM = CM + 0.5
 
         # Efficacité
         efficiencyTypesValue = 1
 
-        if pokemonDefenseur.types.double_damage_from.filter(name=Move.types).exists():
+        if pokemonDefenseur.types.double_damage_from.filter(name=move.types).exists():
             efficiencyTypesValue = efficiencyTypesValue * 2
-        if pokemonDefenseur.types.half_damage_from.filter(name=Move.types).exists():
+        if pokemonDefenseur.types.half_damage_from.filter(name=move.types).exists():
             efficiencyTypesValue = efficiencyTypesValue / 2
-        if pokemonDefenseur.types.no_damage_from.filter(name=Move.types).exists():
+        if pokemonDefenseur.types.no_damage_from.filter(name=move.types).exists():
             efficiencyTypesValue = efficiencyTypesValue * 0
 
             # Random roll
